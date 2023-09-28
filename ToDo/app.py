@@ -40,7 +40,7 @@ def index(todo_id=None):
         todo = Todo.query.get(todo_id)
     todos = Todo.query.order_by(Todo.id.desc()).all()
 
-    return render_template('index.html', todos=todos)
+    return render_template('index.html', todos=todos, todo=todo, todo_id=todo_id)
 
 
 if __name__ == '__main__':
