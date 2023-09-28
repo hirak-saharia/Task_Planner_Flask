@@ -43,5 +43,15 @@ def index(todo_id=None):
     return render_template('index.html', todos=todos, todo=todo, todo_id=todo_id)
 
 
+@app.route('/todo-delete/<int:todo_id>', methods=['GET', 'POST'])
+def delete(todo_id):
+    todo = Todo.query.get(todo_id)
+    if todo:
+        db.session.delete(todo)
+        db.session.commit()
+
+    return redirect(url_for('index'))
+
+
 if __name__ == '__main__':
     app.run(debug=True)
