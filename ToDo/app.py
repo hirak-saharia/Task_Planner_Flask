@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 import sqlite3
 from flask_sqlalchemy import SQLAlchemy
 
@@ -27,11 +27,13 @@ def index(todo_id=None):
             todo = Todo(title=title)
             db.session.add(todo)
             db.session.commit()
+            flash('Todo item added successfully', 'success')
         else:
             todo = Todo.query.get(todo_id)
             if todo:
                 todo.title = title
                 db.session.commit()
+                flash('Todo item updated successfully', 'updated')
 
         return redirect(url_for('index'))
 
@@ -49,6 +51,7 @@ def delete(todo_id):
     if todo:
         db.session.delete(todo)
         db.session.commit()
+        flash('Todo item deleted successfully', 'delete')
 
     return redirect(url_for('index'))
 
